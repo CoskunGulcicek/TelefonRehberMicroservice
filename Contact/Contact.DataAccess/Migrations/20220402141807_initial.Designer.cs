@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Contact.DataAccess.Migrations
 {
     [DbContext(typeof(ContactContext))]
-    [Migration("20220402134612_init")]
-    partial class init
+    [Migration("20220402141807_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
