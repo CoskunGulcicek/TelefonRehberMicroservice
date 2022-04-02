@@ -1,5 +1,6 @@
 ﻿using Contact.Business.Interfaces;
 using Contact.DataAccess.Interfaces;
+using Contact.Entities.Dtos.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,16 @@ namespace Contact.Business.Concrete
         {
             _contactDal = contactDal;
             _genericDal = genericDal;
+        }
+
+        public async Task<ContactGetDto> GetContactByIdAsync(Guid uuid)
+        {
+            return await _contactDal.GetContactByIdAsync(uuid);
+        }
+
+        public async Task<List<ContactGetDto>> GetContactsListAsync()
+        {
+            return await _contactDal.GetContactsListAsync();
         }
     }
 }

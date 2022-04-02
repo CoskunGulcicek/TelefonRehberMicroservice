@@ -28,24 +28,25 @@ namespace Contact.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var allContactInformations = await _contactInformationService.GetAllAsync();
-            return Ok(allContactInformations);
+            return Ok(_mapper.Map<List<ContactInformationGetDto>>(allContactInformations));
         }
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(ValidId<ContactInformation>))]
         public async Task<IActionResult> GetById(int Id)
         {
             var contactInformation = await _contactInformationService.GetByIdAsync(Id);
-            return Ok(contactInformation);
+            return Ok(_mapper.Map<ContactInformationGetDto>(contactInformation));
         }
 
+        [HttpPost]
         [ValidModel]
         public async Task<IActionResult> Add(ContactInformationAddDto contactInformationAddDto)
         {
-            await _contactInformationService.AddAsync(_mapper.Map<ContactInformation>(contactInformationAddDto));
-            return Created("",contactInformationAddDto);
+            var entity = await _contactInformationService.AddAsync(_mapper.Map<ContactInformation>(contactInformationAddDto));
+            return Created("", entity);
         }
 
+        [HttpPut]
         [ValidModel]
         public async Task<IActionResult> Update(ContactInformationUpdateDto contactInformationUpdateDto)
         {
@@ -58,7 +59,7 @@ namespace Contact.WebApi.Controllers
             return Created("",contactInformationUpdateDto);
         }
 
-        [ServiceFilter(typeof(ValidId<ContactInformation>))]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _contactInformationService.RemoveAsync(new ContactInformation() { Id = Id });

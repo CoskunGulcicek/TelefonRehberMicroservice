@@ -28,24 +28,25 @@ namespace Contact.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var allInformationTypes = await _informationTypeService.GetAllAsync();
-            return Ok(allInformationTypes);
+            return Ok(_mapper.Map<List<InformationTypeGetDto>>(allInformationTypes));
         }
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(ValidId<InformationType>))]
         public async Task<IActionResult> GetById(int Id)
         {
             var informationType = await _informationTypeService.GetByIdAsync(Id);
-            return Ok(informationType);
+            return Ok(_mapper.Map<InformationTypeGetDto>(informationType));
         }
 
+        [HttpPost]
         [ValidModel]
         public async Task<IActionResult> Add(InformationTypeAddDto contactInformationAddDto)
         {
-            await _informationTypeService.AddAsync(_mapper.Map<InformationType>(contactInformationAddDto));
-            return Created("", contactInformationAddDto);
+            var entity = await _informationTypeService.AddAsync(_mapper.Map<InformationType>(contactInformationAddDto));
+            return Created("", entity);
         }
 
+        [HttpPut]
         [ValidModel]
         public async Task<IActionResult> Update(InformationTypeUpdateDto contactInformationUpdateDto)
         {
@@ -58,7 +59,7 @@ namespace Contact.WebApi.Controllers
             return Created("", contactInformationUpdateDto);
         }
 
-        [ServiceFilter(typeof(ValidId<InformationType>))]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _informationTypeService.RemoveAsync(new InformationType() { Id = Id });

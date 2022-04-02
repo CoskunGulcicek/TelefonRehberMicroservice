@@ -27,25 +27,26 @@ namespace Contact.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var allContacts = await _contactService.GetAllAsync();
+            List<ContactGetDto> allContacts = await _contactService.GetContactsListAsync();
             return Ok(allContacts);
         }
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(ValidId<Contact.Entities.Concrete.Contact>))]
-        public async Task<IActionResult> GetById(int Id)
+        public async Task<IActionResult> GetById(Guid Id)
         {
-            var contact = await _contactService.GetByIdAsync(Id);
-            return Ok(contact);
+            var contact = await _contactService.GetContactByIdAsync(Id);
+            return Ok(_mapper.Map<ContactGetDto>(contact));
         }
 
+        [HttpPost]
         [ValidModel]
         public async Task<IActionResult> Add(ContactAddDto contactAddDto)
         {
-            await _contactService.AddAsync(_mapper.Map<Contact.Entities.Concrete.Contact>(contactAddDto));
-            return Created("", contactAddDto);
+            var entity = await _contactService.AddAsync(_mapper.Map<Contact.Entities.Concrete.Contact>(contactAddDto));
+            return Created("", entity);
         }
 
+        [HttpPut]
         [ValidModel]
         public async Task<IActionResult> Update(ContactUpdateDto contactUpdateDto)
         {
@@ -58,7 +59,7 @@ namespace Contact.WebApi.Controllers
             return Created("", contactUpdateDto);
         }
 
-        [ServiceFilter(typeof(ValidId<Contact.Entities.Concrete.Contact>))]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid Id)
         {
             await _contactService.RemoveAsync(new Contact.Entities.Concrete.Contact() { UUID = Id });

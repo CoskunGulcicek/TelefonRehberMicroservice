@@ -12,6 +12,5 @@ namespace Contact.Entities.Dtos.Contact
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Company { get; set; }
-
     }
 }

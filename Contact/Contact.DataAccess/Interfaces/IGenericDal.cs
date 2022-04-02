@@ -20,7 +20,7 @@ namespace Contact.DataAccess.Interfaces
 
         Task<TEntity> GetByIdAsync(int id);
         Task<TEntity> GetByUUIdAsync(Guid id);
-        Task AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
 
