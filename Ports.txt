@@ -1,0 +1,4 @@
+"Contact.Web": "http://localhost:5010",
+"Contact.Services" : "http://localhost:5011"
+
+
