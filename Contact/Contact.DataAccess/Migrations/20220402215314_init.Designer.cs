@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Contact.DataAccess.Migrations
 {
     [DbContext(typeof(ContactContext))]
-    [Migration("20220402141807_initial")]
-    partial class initial
+    [Migration("20220402215314_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,34 +52,20 @@ namespace Contact.DataAccess.Migrations
                     b.Property<Guid>("ContactUUID")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Content")
+                    b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<int>("InformationTypeId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContactUUID");
 
-                    b.HasIndex("InformationTypeId");
-
                     b.ToTable("ContactInformations");
-                });
-
-            modelBuilder.Entity("Contact.Entities.Concrete.InformationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InformationTypes");
                 });
 
             modelBuilder.Entity("Contact.Entities.Concrete.ContactInformation", b =>
@@ -90,23 +76,10 @@ namespace Contact.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Contact.Entities.Concrete.InformationType", "InformationType")
-                        .WithMany("ContactInformations")
-                        .HasForeignKey("InformationTypeId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
                     b.Navigation("Contact");
-
-                    b.Navigation("InformationType");
                 });
 
             modelBuilder.Entity("Contact.Entities.Concrete.Contact", b =>
-                {
-                    b.Navigation("ContactInformations");
-                });
-
-            modelBuilder.Entity("Contact.Entities.Concrete.InformationType", b =>
                 {
                     b.Navigation("ContactInformations");
                 });

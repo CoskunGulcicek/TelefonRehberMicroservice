@@ -23,8 +23,6 @@ namespace Contact.Business.Concrete.Containers.Microsoftioc
             services.AddScoped<IContactInformationDal, EfContactInformationRepository>();
             services.AddScoped<IContactInformationService, ContactInformationManager>();
 
-            services.AddScoped<IInformationTypeDal, EfInformationTypeRepository>();
-            services.AddScoped<IInformationTypeService, InformationTypeManager>();
 
 
         }

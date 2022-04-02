@@ -32,14 +32,12 @@ namespace Contact.DataAccess.Concrete.EntityFrameworkCore
             #region
             //fluent api ile modellerimi dataannotation ettim
             modelBuilder.ApplyConfiguration(new ContactMap());
-            modelBuilder.ApplyConfiguration(new InformationTypeMap());
             modelBuilder.ApplyConfiguration(new ContactInformationMap());
             #endregion
         }
 
         public DbSet<Contact.Entities.Concrete.Contact> Contacts { get; set; }
         public DbSet<ContactInformation>  ContactInformations { get; set; }
-        public DbSet<InformationType> InformationTypes { get; set; }
 
     }
 }

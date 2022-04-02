@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Contact.Entities.Concrete;
 using Contact.Entities.Dtos.ContactInformation;
-using Contact.Entities.Dtos.InformationType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +30,6 @@ namespace Contact.WebApi.Mapping.AutoMapperProfile
             CreateMap<ContactInformationUpdateDto, ContactInformation>();
             CreateMap<ContactInformation, ContactInformationUpdateDto>();
 
-            CreateMap<InformationTypeAddDto, InformationType>();
-            CreateMap<InformationType, InformationTypeAddDto>();
-
-            CreateMap<InformationTypeGetDto, InformationType>();
-            CreateMap<InformationType, InformationTypeGetDto>();
-
-            CreateMap<InformationTypeUpdateDto, InformationType>();
-            CreateMap<InformationType, InformationTypeUpdateDto>();
 
 
         }

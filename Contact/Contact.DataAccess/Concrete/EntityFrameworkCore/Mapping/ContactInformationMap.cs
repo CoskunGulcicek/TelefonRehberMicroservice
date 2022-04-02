@@ -15,11 +15,6 @@ namespace Contact.DataAccess.Concrete.Mapping
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
-
-            builder.HasOne(x => x.InformationType)
-                .WithMany(x => x.ContactInformations)
-                .HasForeignKey(x => x.InformationTypeId)
-                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

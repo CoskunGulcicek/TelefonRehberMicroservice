@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Contact.DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,26 +26,14 @@ namespace Contact.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InformationTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InformationTypes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ContactInformations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    InformationTypeId = table.Column<int>(type: "integer", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Location = table.Column<string>(type: "text", nullable: true),
                     ContactUUID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -57,23 +45,12 @@ namespace Contact.DataAccess.Migrations
                         principalTable: "Contacts",
                         principalColumn: "UUID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ContactInformations_InformationTypes_InformationTypeId",
-                        column: x => x.InformationTypeId,
-                        principalTable: "InformationTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContactInformations_ContactUUID",
                 table: "ContactInformations",
                 column: "ContactUUID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ContactInformations_InformationTypeId",
-                table: "ContactInformations",
-                column: "InformationTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -83,9 +60,6 @@ namespace Contact.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Contacts");
-
-            migrationBuilder.DropTable(
-                name: "InformationTypes");
         }
     }
 }

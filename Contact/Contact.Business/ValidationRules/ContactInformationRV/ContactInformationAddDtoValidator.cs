@@ -12,9 +12,10 @@ namespace Contact.Business.ValidationRules.ContactInformationRV
     {
         public ContactInformationAddDtoValidator()
         {
-            RuleFor(x => x.InformationTypeId).NotEmpty().InclusiveBetween(0, int.MaxValue); ;
             RuleFor(x => x.ContactUUID).NotEmpty().WithMessage("Kullanıcı idsi boş geçilemez");
-            RuleFor(x => x.Content).NotEmpty().WithMessage("content alanı boş geçilemez");
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email alanı boş geçilemez");
+            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("telefon numarası boş geçilemez");
+            RuleFor(x => x.Location).NotEmpty().WithMessage("Konum boş geçilemez");
         }
     }
 }
