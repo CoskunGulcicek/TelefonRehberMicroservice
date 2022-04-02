@@ -13,8 +13,7 @@ namespace Contact.Entities.Concrete
         public int InformationTypeId { get; set; }
         public string Content { get; set; }
 
-        public string ContactUUID { get; set; }
-
+        public Guid ContactUUID { get; set; }
         public Contact Contact { get; set; }
         public InformationType InformationType { get; set; }
     }

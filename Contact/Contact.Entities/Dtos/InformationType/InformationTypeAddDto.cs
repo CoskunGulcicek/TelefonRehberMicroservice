@@ -9,5 +9,6 @@ namespace Contact.Entities.Dtos.InformationType
 {
     public class InformationTypeAddDto : IDto
     {
+        public string Name { get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace Contact.Entities.Dtos.ContactInformation
         public string InformationType { get; set; }
         public string Content { get; set; }
 
-        public string ContactUUID { get; set; }
+        public Guid ContactUUID { get; set; }
     }
 }

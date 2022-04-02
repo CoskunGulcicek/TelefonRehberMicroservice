@@ -9,7 +9,7 @@ namespace Contact.Entities.Concrete
 {
     public class Contact : ITable
     {
-        public string UUID { get; set; }
+        public Guid UUID { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Company { get; set; }

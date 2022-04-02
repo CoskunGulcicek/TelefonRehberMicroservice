@@ -10,7 +10,7 @@ namespace Contact.Entities.Dtos.Contact
 {
     public class ContactGetDto : IDto
     {
-        public string UUID { get; set; }
+        public Guid UUID { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Company { get; set; }
