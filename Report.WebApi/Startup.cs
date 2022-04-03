@@ -1,8 +1,4 @@
-using AutoMapper;
-using Contact.Business.Concrete.Containers.Microsoftioc;
-using Contact.WebApi.CustomFilters;
-using Contact.WebApi.Mapping.AutoMapperProfile;
-using FluentValidation.AspNetCore;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,13 +7,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Report.WebApi.Consumer;
+using Report.WebApi.Services;
+using Report.WebApi.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Contact.WebApi
+namespace Report.WebApi
 {
     public class Startup
     {
@@ -31,29 +31,41 @@ namespace Contact.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
-
-            services.AddCors(options =>
+            services.AddScoped<IReportService, ReportService>();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddMassTransit(x =>
             {
-                options.AddPolicy("AllowOrigin",
-                builder => builder.WithOrigins($"{Configuration.GetConnectionString("UiServerConnectionString")}"));
+                x.AddConsumer<CreateReportMessageCommandConsumer>();
+
+                // Default Port : 5672
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+                    cfg.ReceiveEndpoint("create-report-service", e =>
+                    {
+                        e.ConfigureConsumer<CreateReportMessageCommandConsumer>(context);
+                    }
+                    );
+                });
             });
 
+            services.AddMassTransitHostedService();
+            services.AddControllers();
 
-            services.AddControllers().AddFluentValidation();
-            services.AddDependencies();
-            services.AddScoped(typeof(ValidId<>));
+            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
 
-            var mappingConfig = new MapperConfiguration(mc =>
+            services.AddSingleton<IDatabaseSettings>(sp =>
             {
-                mc.AddProfile(new MapProfile());
+                return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.WebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Report.WebApi", Version = "v1" });
             });
         }
 
@@ -64,18 +76,13 @@ namespace Contact.WebApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contact.WebApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Report.WebApi v1"));
             }
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-            app.UseCors(builder => builder
-                .WithOrigins(Configuration.GetConnectionString("UiServerConnectionString"), Configuration.GetConnectionString("UiServerConnectionString"))
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials());
             app.UseStaticFiles();
+            app.UseRouting();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
