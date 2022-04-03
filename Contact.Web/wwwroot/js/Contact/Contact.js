@@ -51,7 +51,7 @@ function deleteInformation(int) {
     $.ajax({
         type: 'Delete',
         url: 'https://localhost:5011/api/contactInformations/' + int,
-        success: function (response) {
+        success: function (response) { 
             if (response = 204) {
                 window.location.reload(1);            }
         },
