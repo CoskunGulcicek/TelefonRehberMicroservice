@@ -5,17 +5,26 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{176442C1-5C20-4A70-9596-4F81C7BB9257}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contatc", "Contatc", "{CB4AC69D-C75F-49C6-96D4-88AFC8F55C57}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contact", "Contact", "{CB4AC69D-C75F-49C6-96D4-88AFC8F55C57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Report", "Report", "{D345DA41-4CD8-448B-A670-F81CEAC25AA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.WebApi", "Contact\Contact.WebApi\Contact.WebApi.csproj", "{8CC868B9-2AB0-4019-B59E-688C755AFC86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.WebApi", "Contact\Contact.WebApi\Contact.WebApi.csproj", "{8CC868B9-2AB0-4019-B59E-688C755AFC86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Business", "Contact\Contact.Business\Contact.Business.csproj", "{8CFCA911-1C96-49A4-9161-950AA9B8811B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Business", "Contact\Contact.Business\Contact.Business.csproj", "{8CFCA911-1C96-49A4-9161-950AA9B8811B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.DataAccess", "Contact\Contact.DataAccess\Contact.DataAccess.csproj", "{45368C33-C33B-4617-8E4E-F180A4589CCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.DataAccess", "Contact\Contact.DataAccess\Contact.DataAccess.csproj", "{45368C33-C33B-4617-8E4E-F180A4589CCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Entities", "Contact\Contact.Entities\Contact.Entities.csproj", "{560C2637-A0C6-4B9F-8C80-3B11CC38F36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Entities", "Contact\Contact.Entities\Contact.Entities.csproj", "{560C2637-A0C6-4B9F-8C80-3B11CC38F36A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{4F876D65-83D2-4B18-A33D-EDA02B4BE96B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Web", "Contact.Web\Contact.Web.csproj", "{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D24C32ED-F527-4870-B06B-9572974D7901}"
+	ProjectSection(SolutionItems) = preProject
+		Ports.txt = Ports.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +48,10 @@ Global
 		{560C2637-A0C6-4B9F-8C80-3B11CC38F36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560C2637-A0C6-4B9F-8C80-3B11CC38F36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560C2637-A0C6-4B9F-8C80-3B11CC38F36A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +63,7 @@ Global
 		{8CFCA911-1C96-49A4-9161-950AA9B8811B} = {CB4AC69D-C75F-49C6-96D4-88AFC8F55C57}
 		{45368C33-C33B-4617-8E4E-F180A4589CCF} = {CB4AC69D-C75F-49C6-96D4-88AFC8F55C57}
 		{560C2637-A0C6-4B9F-8C80-3B11CC38F36A} = {CB4AC69D-C75F-49C6-96D4-88AFC8F55C57}
+		{9A6F9802-5FE8-4B2A-A85B-193FBEF1AFFD} = {4F876D65-83D2-4B18-A33D-EDA02B4BE96B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A49DEF1-AB8B-4B9F-83E3-2FF3ABA1BBC2}

@@ -1,0 +1,151 @@
+﻿@model List<Contact.Web.Models.Contact.ContactGetDto>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="container">
+				<form style="padding:15px;">
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="modalUUID">UUID</label>
+							<input id="modalUUID" type="text" class="form-control" disabled>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="modalEmail">Email</label>
+							<input id="modalEmail" type="text" class="form-control" placeholder="Email">
+						</div>
+						<div class="form-group col-md-6">
+						<label for="modalPhone">Telefon Numarası</label>
+						<input id="modalPhone" type="text" class="form-control" placeholder="Telefon Numarası">
+						</div>
+						<div class="form-group col-md-12">
+							<label for="modalSelectLocation">Konum</label>
+							<select id="modalSelectLocation" class="form-control" aria-label="Default select example">
+								<option value="Istanbul">Istanbul</option>
+								<option value="Ankara">Ankara</option>
+								<option value="Sivas">Sivas</option>
+								<option value="Londra">Londra</option>
+								<option value="Tokyo">Tokyo</option>
+								<option value="Paris">Paris</option>
+							</select>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="modalContent">İçerik</label>
+							<textarea class="form-control" id="modalContent" rows="2" placeholder="İletişim İçeriği" required="required"></textarea>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary" id="saveInformations">Sign in</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+ <div class="form-row">
+  <div class="col-4">
+   <input id="inputName" type="text" class="form-control" placeholder="Ad">
+  </div>
+  <div class="col-4">
+   <input id="inputSurName" type="text" class="form-control" placeholder="Soyad">
+  </div>
+  <div class="col-4">
+   <input id="inputCompany" type="text" class="form-control" placeholder="Şirket İsmi">
+  </div>
+  <br /><br />
+  <div class="col-4">
+   <input id="inputPhone" type="text" class="form-control" placeholder="Telefon Numarası">
+  </div>
+  <div class="col-4">
+   <input id="inputEmail" type="text" class="form-control" placeholder="Email">
+  </div>
+  <div class="col-4">
+   <select id="selectLocation" class="form-control" aria-label="Default select example">
+	<option value="Istanbul">Istanbul</option>
+	<option value="Ankara">Ankara</option>
+	<option value="Sivas">Sivas</option>
+	<option value="Londra">Londra</option>
+	<option value="Tokyo">Tokyo</option>
+	<option value="Paris">Paris</option>
+   </select>
+  </div>
+  <br /><br />
+  <div class="col-12">
+   <textarea class="form-control" id="inputContent" rows="2" placeholder="İletişim İçeriği" required="required"></textarea>
+  </div>
+  <br /><br /><br />
+  <p class="text-center"><button class="btn btn-primary" type="submit" id="btnSaveContact">Contact Kişisini Ekle</button></p>
+ </div>
+</div>
+<br>
+<br>
+<br>
+<div class="text-center">
+ <table class="table table-striped">
+  <thead>
+   <tr>
+	<th scope="col">#</th>
+	<th scope="col">Name</th>
+	<th scope="col">SurName</th>
+	<th scope="col">Company</th>
+	<th scope="col">Actions</th>
+   </tr>
+  </thead>
+  <tbody>
+			@{
+				int i = 0;
+
+			}
+			@foreach (var contact in Model)
+			{
+				i++;
+	   <tr>
+		<td>
+			<input type="hidden" value="@contact.UUID" id="UUID_@i" /> 
+		</td>
+		<td>@contact.Name</td>
+		<td>@contact.SurName</td>
+		<td>@contact.Company</td>
+		<td>
+			<a class="btn-danger btn-sm" href="javascript:deleteContact(@i);">Sil</a>
+			<a class="btn-primary btn-sm" href="javascript:getUUID(@i);">Bilgi Ekle</a>
+		</td>
+	   </tr>
+				@if (contact.ContactInformations.Count > 0)
+				{
+		   
+						@foreach (var info in contact.ContactInformations)
+						{
+							<tr>
+				<td colspan="5">
+				 <div class="row">
+				  <div class="col-sm-2"><span class="text-warning">Phone :</span> @info.PhoneNumber</div>
+				  <div class="col-sm-2"><span class="text-warning">Email :</span> @info.Email</div>
+				  <div class="col-sm-2"><span class="text-warning">Location :</span> @info.Location</div>
+				  <div class="col-sm-4"><span class="text-warning">Content : </span>@info.Content</div>
+				  <div class="col-sm-2"><a type="button" id="btnDeleteInformation" class="btn btn-outline-danger btn-sm" href="javascript:deleteInformation(@info.Id)">Sil</a></div>
+				 </div>
+				</td>
+				</tr>
+						}
+		   
+				}
+			}
+  </tbody>
+ </table>
+</div>
+
+
+
+@section Scripts {
+<script src="~/js/Contact/Contact.js"></script>
+}

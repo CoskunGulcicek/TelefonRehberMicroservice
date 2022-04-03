@@ -1,3 +1,8 @@
+using AutoMapper;
+using Contact.Business.Concrete.Containers.Microsoftioc;
+using Contact.WebApi.CustomFilters;
+using Contact.WebApi.Mapping.AutoMapperProfile;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,8 +31,26 @@ namespace Contact.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
 
-            services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                builder => builder.WithOrigins($"{Configuration.GetConnectionString("UiServerConnectionString")}"));
+            });
+
+
+            services.AddControllers().AddFluentValidation();
+            services.AddDependencies();
+            services.AddScoped(typeof(ValidId<>));
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contact.WebApi", Version = "v1" });
@@ -47,7 +70,8 @@ namespace Contact.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(builder => builder.WithOrigins(Configuration.GetConnectionString("UiServerConnectionString")).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
