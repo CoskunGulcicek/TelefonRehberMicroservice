@@ -20,9 +20,9 @@ namespace Contact.Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var contacts = _contactService.GetAllAsync();
+            var contacts = await _contactService.GetAllAsync();
             return View(contacts);
         }
 

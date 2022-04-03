@@ -1,19 +1,82 @@
 ﻿$(document).ready(function () {
-    $.ajax({
-        type: 'GET',
-        url: 'https://localhost:5011/api/contacts',
-        success: function (data) {
-            console.log(data);
+});
 
-            var myvar = "<tr><td>html data</td> </tr>";
-            $('#InformationItems').html(myvar)
+function getUUID(id) {
+    $('#modalUUID').val($('#UUID_' + id).val());
+    $('#saveModal').modal();
+}
+
+$('#saveInformations').click(function ()
+{
+    if (
+        ($('#modalPhone').val() == "") ||
+        ($('#modalEmail').val() == "") ||
+        ($('#modalLocation').val() == "") ||
+        ($('#modalContent').val() == "")
+    ) {
+        alert("Lütfen tüm alanları doldurun!");
+        return;
+    }
+    var infos = {
+        ContactUUID: $('#modalUUID').val(),
+        PhoneNumber: $('#modalPhone').val(),
+        Email: $('#modalEmail').val(),
+        Location: $('#modalSelectLocation').val(),
+        Content: $('#modalContent').val()
+    }
+    saveInfos(infos);
+
+});
+function saveInfos(data) {
+    $.ajax({
+        type: 'POST',
+        url: 'https://localhost:5011/api/contactInformations',
+        data: JSON.stringify(data),
+        success: function (response) {
+            if ((response = 200) || (response = 201)) {
+                alert("Ekleme Başarılı");
+                window.location.reload(1);
+            }
         },
         contentType: 'application/json',
         error: function () {
-            
+            alert("Başarısız");
+
         }
     });
-});
+}
+
+
+function deleteInformation(int) {
+    $.ajax({
+        type: 'Delete',
+        url: 'https://localhost:5011/api/contactInformations/' + int,
+        success: function (response) {
+            if (response = 204) {
+                window.location.reload(1);            }
+        },
+        error: function () {
+           console.log(' silinirken bir problem oluştu.');
+        }
+    });
+}
+
+function deleteContact(int) {
+    var id = $('#UUID_' + int).val();
+    console.log(id);
+    $.ajax({
+        type: 'Delete',
+        url: 'https://localhost:5011/api/contacts/' + id,
+        success: function (response) {
+            if (response = 204) {
+                window.location.reload(1);
+            }
+        },
+        error: function () {
+            console.log(' silinirken bir problem oluştu.');
+        }
+    });
+}
 
 //ekleme işlemleri başlangıç
 $('#btnSaveContact').click(function () {
@@ -50,7 +113,7 @@ function saveContact(data) {
         success: function (response) {
             if ((response = 200) || (response = 201)) {
                 alert("Ekleme Başarılı");
-                console.log(response.data);
+                window.location.reload(1);
             }
         },
         contentType: 'application/json',
