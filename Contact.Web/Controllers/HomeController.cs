@@ -1,4 +1,5 @@
-﻿using Contact.Web.Models;
+﻿using Contact.Web.ApiServices.Interfaces;
+using Contact.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,17 @@ namespace Contact.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IContactService _contactService;
+        public HomeController(IContactService contactService,ILogger<HomeController> logger)
         {
+            _contactService = contactService;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var contacts = _contactService.GetAllAsync();
+            return View(contacts);
         }
 
         public IActionResult Privacy()

@@ -1,14 +1,11 @@
-﻿
-using Contact.Entities.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Contact.Entities.Dtos.ContactInformation
+namespace Contact.Web.Models.ContactInformation
 {
-    public class ContactInformationUpdateDto : IDto
+    public class ContactInformationGetDto
     {
         public int Id { get; set; }
         public string PhoneNumber { get; set; }

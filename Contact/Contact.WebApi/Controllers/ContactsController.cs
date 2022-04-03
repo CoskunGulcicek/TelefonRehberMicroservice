@@ -17,10 +17,12 @@ namespace Contact.WebApi.Controllers
     public class ContactsController : ControllerBase
     {
         private readonly IContactService _contactService;
+        private readonly IContactInformationService _contactInformationService;
         private readonly IMapper _mapper;
-        public ContactsController(IContactService contactService, IMapper mapper)
+        public ContactsController(IContactService contactService, IContactInformationService contactInformationService, IMapper mapper)
         {
             _contactService = contactService;
+            _contactInformationService = contactInformationService;
             _mapper = mapper;
         }
 
@@ -43,6 +45,16 @@ namespace Contact.WebApi.Controllers
         public async Task<IActionResult> Add(ContactAddDto contactAddDto)
         {
             var entity = await _contactService.AddAsync(_mapper.Map<Contact.Entities.Concrete.Contact>(contactAddDto));
+            if (entity != null)
+            {
+                ContactInformation contactInformation = new();
+                contactInformation.ContactUUID = entity.UUID;
+                contactInformation.PhoneNumber = contactAddDto.PhoneNumber;
+                contactInformation.Email = contactAddDto.Email;
+                contactInformation.Location = contactAddDto.Location;
+                contactInformation.Content = contactAddDto.Content;
+                await _contactInformationService.AddAsync(contactInformation);
+            }
             return Created("", entity);
         }
 

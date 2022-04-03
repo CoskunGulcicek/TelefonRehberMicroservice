@@ -3,25 +3,35 @@
 }
 <div class="text-center">
 	 <div class="form-row">
-		  <div class="col-3">
-			   <input type="text" class="form-control" placeholder="Ad" required="required">
+		  <div class="col-4">
+			   <input id="inputName" type="text" class="form-control" placeholder="Ad" >
 		  </div>
-		  <div class="col-3">
-			   <input type="text" class="form-control" placeholder="Soyad" required="required">
+		  <div class="col-4">
+			   <input id="inputSurName" type="text" class="form-control" placeholder="Soyad" >
 		  </div>
-		  <div class="col-3">
-			   <input type="text" class="form-control" placeholder="Şirket İsmi" required="required">
+		  <div class="col-4">
+			   <input id="inputCompany" type="text" class="form-control" placeholder="Şirket İsmi" >
 		  </div>
-		  <div class="col-3">
-				   <select class="form-control" aria-label="Default select example" required="required">
-					<option value="1">Telefon Numarası</option>
-					<option value="2">E-Mail Adresi</option>
-					<option value="3">Konum</option>
-				   </select>
+		  <br /><br />
+		  <div class="col-4">
+			   <input id="inputPhone" type="text" class="form-control" placeholder="Telefon Numarası" >
+		  </div>
+		  <div class="col-4">
+			   <input id="inputEmail" type="text" class="form-control" placeholder="Email" >
+		  </div>
+		  <div class="col-4">
+				<select id="selectLocation" class="form-control" aria-label="Default select example">
+				  <option value="Istanbul">Istanbul</option>
+				  <option value="Ankara">Ankara</option>
+				  <option value="Sivas">Sivas</option>
+				  <option value="Londra">Londra</option>
+				  <option value="Tokyo">Tokyo</option>
+				  <option value="Paris">Paris</option>
+				</select>		  
 		  </div>
 		  <br /><br />
 		  <div class="col-12">
-			   <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="İletişim İçeriği" required="required"></textarea>
+			   <textarea class="form-control" id="inputContent" rows="1" placeholder="İletişim İçeriği" required="required"></textarea>
 		  </div>
 		  <br /><br /><br />
 			  <p class="text-center"><button class="btn btn-primary" type="submit" id="btnSaveContact">Contact Kişisini Ekle</button></p>
@@ -36,12 +46,13 @@
 					<th scope="col">Name</th>
 					<th scope="col">SurName</th>
 					<th scope="col">Company</th>
-					<th scope="col">Contact Informations</th>
+					<th scope="col">Informations</th>
 			   </tr>
 		  </thead>
-		  <tbody>
+		  <tbody> 
 			   <tr>
-			   </tr>
+		  
+			  </tr>
 		  </tbody>
 	 </table>
 </div>

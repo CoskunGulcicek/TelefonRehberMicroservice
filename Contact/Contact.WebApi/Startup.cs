@@ -32,6 +32,14 @@ namespace Contact.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                builder => builder.WithOrigins($"{Configuration.GetConnectionString("UiServerConnectionString")}"));
+            });
+
+
             services.AddControllers().AddFluentValidation();
             services.AddDependencies();
             services.AddScoped(typeof(ValidId<>));
@@ -62,8 +70,8 @@ namespace Contact.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
-
+            app.UseCors(builder => builder.WithOrigins(Configuration.GetConnectionString("UiServerConnectionString")).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseStaticFiles();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

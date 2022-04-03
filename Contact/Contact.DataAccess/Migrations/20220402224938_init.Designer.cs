@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Contact.DataAccess.Migrations
 {
     [DbContext(typeof(ContactContext))]
-    [Migration("20220402215314_init")]
+    [Migration("20220402224938_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace Contact.DataAccess.Migrations
 
                     b.Property<Guid>("ContactUUID")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");

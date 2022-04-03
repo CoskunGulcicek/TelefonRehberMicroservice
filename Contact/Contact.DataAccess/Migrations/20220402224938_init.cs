@@ -34,6 +34,7 @@ namespace Contact.DataAccess.Migrations
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Location = table.Column<string>(type: "text", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true),
                     ContactUUID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

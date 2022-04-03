@@ -50,6 +50,9 @@ namespace Contact.DataAccess.Migrations
                     b.Property<Guid>("ContactUUID")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 

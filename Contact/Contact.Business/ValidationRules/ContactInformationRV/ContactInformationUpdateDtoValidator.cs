@@ -16,6 +16,7 @@ namespace Contact.Business.ValidationRules.ContactInformationRV
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email alanı boş geçilemez");
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("telefon numarası boş geçilemez");
             RuleFor(x => x.Location).NotEmpty().WithMessage("Konum boş geçilemez");
+            RuleFor(x => x.Content).NotEmpty().WithMessage("İçeirik boş geçilemez");
         }
     }
 }
