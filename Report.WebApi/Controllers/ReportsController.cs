@@ -3,6 +3,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Report.WebApi.Services;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Report.WebApi.Controllers
@@ -28,6 +29,18 @@ namespace Report.WebApi.Controllers
             createReportMessageCommand.CreatedTime = DateTime.Now;
             await sendEndpoint.Send<CreateReportMessageCommand>(createReportMessageCommand);
             return Created("",createReportMessageCommand);
+        }
+
+        [HttpGet]
+        public IActionResult DownloadForInvoices(string reportId)
+        {
+            var path = _reportService.GetByIdAsync(reportId).Result.FilePath; 
+            if (path != null)
+            {
+                var stream = new FileStream(path, FileMode.Open);
+                return new FileStreamResult(stream, "application/pdf");
+            }
+            return BadRequest();
         }
     }
 }

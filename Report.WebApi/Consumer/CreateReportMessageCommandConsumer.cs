@@ -25,6 +25,5 @@ namespace Report.WebApi.Consumer
             reports.Location = context.Message.Location;
             await _reportService.CreateAsync(reports);
         }
-
     }
 }

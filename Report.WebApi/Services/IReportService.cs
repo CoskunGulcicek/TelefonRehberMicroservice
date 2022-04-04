@@ -11,6 +11,7 @@ namespace Report.WebApi.Services
         Task<Reports> CreateAsync(Reports reports);
         Task<Reports> GetByIdAsync(string id);
         Task<List<Reports>> GetAllAsync();
+        Task<List<Reports>> GetAllByLocationAsync(string location);
         Task DeleteAsync(string id);
     }
 }

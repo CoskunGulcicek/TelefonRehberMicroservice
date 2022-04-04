@@ -1,3 +1,5 @@
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Report.WebApi.Consumer;
+using Report.WebApi.Hubs;
+using Report.WebApi.Hubs.Business;
 using Report.WebApi.Services;
 using Report.WebApi.Settings;
 using System;
@@ -32,7 +36,15 @@ namespace Report.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IReportService, ReportService>();
+            services.AddSignalR();
+            services.AddCors(options => options.AddDefaultPolicy(policy =>
+                                        policy.AllowAnyMethod()
+                                                .AllowAnyHeader()
+                                                .AllowCredentials()
+                                                .SetIsOriginAllowed(origin => true)
+                                    ));
             services.AddAutoMapper(typeof(Startup));
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<CreateReportMessageCommandConsumer>();
@@ -55,13 +67,16 @@ namespace Report.WebApi
 
             services.AddMassTransitHostedService();
             services.AddControllers();
-
+            services.AddHttpContextAccessor();
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
 
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
+
+            services.AddTransient<ReportHubManager>();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -80,14 +95,23 @@ namespace Report.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseCors();
             app.UseStaticFiles();
             app.UseRouting();
-
+            
             app.UseAuthorization();
+
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+            };
+            webSocketOptions.AllowedOrigins.Add("https://localhost:5012/");
+            app.UseWebSockets(webSocketOptions);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ReportHub>("/reporthub");
             });
         }
     }

@@ -14,6 +14,10 @@ namespace Contact.Entities.Dtos.ContactInformation
         public string Email { get; set; }
         public string Location { get; set; }
         public string Content { get; set; }
+        public int ContactCount { get; set; }
+        public int ContactPhoneCount { get; set; }
         public Guid ContactUUID { get; set; }
+        public string Name { get; set; }
+        public string SurName { get; set; }
     }
 }

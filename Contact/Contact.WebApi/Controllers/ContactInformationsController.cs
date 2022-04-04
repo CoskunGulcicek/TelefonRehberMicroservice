@@ -32,10 +32,18 @@ namespace Contact.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int Id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var contactInformation = await _contactInformationService.GetByIdAsync(Id);
+            ContactInformationGetDto contactInformation = new();// await _contactInformationService.GetByIdAsync(Id);
             return Ok(_mapper.Map<ContactInformationGetDto>(contactInformation));
+        }
+
+
+        [Route("location")]
+        public async Task<IActionResult> GetByLocation(string location)
+        {
+            List<ContactInformationGetDto> contactInformation = await _contactInformationService.GetContactsByLocationAsync(location);
+            return Ok(contactInformation);
         }
 
         [HttpPost]
