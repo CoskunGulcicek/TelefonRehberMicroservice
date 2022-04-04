@@ -11,7 +11,7 @@ Contact.Service : Contact web üzerinden gelen isteklere cevap verir ve aynı za
 Report.Service : Contact tarafından gelen rapor isteğini alır. Kuyruğa ekler ve sırasıyla kuyruktan okur raporu oluştururken contact servisine istekler atıp ilgili rapor verilerini çeker ve rapor tamalandığında client tarafını dosyanın indirmeye hazır olduğu şeklinde bilgilendirir.
 
 Servislerin Çalışacağı Portlar
-"Contact.Web": "http://localhost:5010",
+"Contact.Web": "http://localhost:5010",<br>
 "Contact.Services" : "http://localhost:5011"
 "Report.Services" : "http://localhost:5012"
 
