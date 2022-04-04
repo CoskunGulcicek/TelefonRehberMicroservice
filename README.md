@@ -2,16 +2,16 @@
 
 Program iki servis ve bir UIdan oluşmaktadır.
 
-Contact.Web UI - .net Core 5.0,html,css,jquery,signalR
-Contact Service - .net Core 5.0,postresql,entityframework
-Report Service - .net Core 5.0,mongodb,RabbitMQ(MassTransit),signalR
+Contact.Web UI - .net Core 5.0,html,css,jquery,signalR <br />
+Contact Service - .net Core 5.0,postresql,entityframework <br />
+Report Service - .net Core 5.0,mongodb,RabbitMQ(MassTransit),signalR <br />
 
 Contact.Web : Contact web üzerinden yaptığımız tüm crud işlemleri, contact microservisine istek olarak iletilir. Rapor oluşturma talebi için de Report microservisine istek yapar.
 Contact.Service : Contact web üzerinden gelen isteklere cevap verir ve aynı zamanda Report.Service üzerinden gelen Rapor isteğine cevap verir.
 Report.Service : Contact tarafından gelen rapor isteğini alır. Kuyruğa ekler ve sırasıyla kuyruktan okur raporu oluştururken contact servisine istekler atıp ilgili rapor verilerini çeker ve rapor tamalandığında client tarafını dosyanın indirmeye hazır olduğu şeklinde bilgilendirir.
 
 Servislerin Çalışacağı Portlar
-"Contact.Web": "http://localhost:5010",<br>
+"Contact.Web": "http://localhost:5010"
 "Contact.Services" : "http://localhost:5011"
 "Report.Services" : "http://localhost:5012"
 
@@ -20,7 +20,7 @@ Contact.Service
 	Postresql port : 5432
 Report.Service 
 	mongodb port  : 27017
-	rabbitmq port :15672
+	rabbitmq port : 15672
 
 
 Diğer Ayrıntılar ;
