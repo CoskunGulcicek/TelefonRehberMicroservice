@@ -1,4 +1,5 @@
 ﻿using Contact.Entities.Concrete;
+using Contact.Entities.Dtos.ContactInformation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Contact.Business.Interfaces
 {
     public interface IContactInformationService : IGenericService<ContactInformation>
     {
+        Task<List<ContactInformationGetDto>> GetContactsByLocationAsync(string location);
     }
 }

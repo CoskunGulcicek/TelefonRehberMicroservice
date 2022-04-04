@@ -86,9 +86,33 @@
   <p class="text-center"><button class="btn btn-primary" type="submit" id="btnSaveContact">Contact Kişisini Ekle</button></p>
  </div>
 </div>
+<hr />
 <br>
 <br>
 <br>
+
+<div class="container">
+ <div class="form-row">
+  <div class="col-3 offset-md-3">
+   <select id="selectReportLocation" class="form-control" aria-label="Default select example">
+	<option value="Istanbul">Istanbul</option>
+	<option value="Ankara">Ankara</option>
+	<option value="Sivas">Sivas</option>
+	<option value="Londra">Londra</option>
+	<option value="Tokyo">Tokyo</option>
+	<option value="Paris">Paris</option>
+   </select>
+  </div>  
+  <div class="col-3">
+  <p class="text-center"><button class="btn btn-primary" type="submit" id="btnRaporOluştur">Rapor Talep Et</button></p>
+  </div>
+  <div class="col-2">
+  <p class="text-center"><button class="btn btn-primary" type="submit" id="btnRaporIndir" disabled>Raporu İndir</button></p>
+  <input type="hidden" name="reportId" id="reportId" />
+  </div>
+</div>
+<hr>
+<br /><br><br />
 <div class="text-center">
  <table class="table table-striped">
   <thead>
@@ -148,4 +172,7 @@
 
 @section Scripts {
 <script src="~/js/Contact/Contact.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/hubs/ReportHub.js"></script>
+
 }

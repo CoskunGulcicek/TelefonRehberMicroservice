@@ -70,7 +70,11 @@ namespace Contact.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(builder => builder.WithOrigins(Configuration.GetConnectionString("UiServerConnectionString")).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseCors(builder => builder
+                .WithOrigins(Configuration.GetConnectionString("UiServerConnectionString"), Configuration.GetConnectionString("UiServerConnectionString"))
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
             app.UseStaticFiles();
             app.UseAuthorization();
 

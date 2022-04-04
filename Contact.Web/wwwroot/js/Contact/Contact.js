@@ -123,4 +123,26 @@ function saveContact(data) {
         }
     });
 }
+
+
 //ekleme işlemleri bitiş
+$('#btnRaporOluştur').click(function () {
+    var locationString = $("#selectReportLocation").val();
+    $.ajax({
+        type: 'POST',
+        url: 'https://localhost:5012/api/reports?location=' + locationString,
+        success: function (response) {
+            if ((response = 200) || (response = 201)) {
+                alert("Rapor Talebi İletildi Hazır Olduğunda Bilgilendirileceksiniz");
+            }
+        },
+        error: function () {
+            alert("Başarısız");
+        }
+    });
+});
+
+$('#btnRaporIndir').click(function () {
+    var id = $("#reportId").val();
+    window.open("https://localhost:5012/api/reports?reportId=" + id);
+});

@@ -1,6 +1,7 @@
 ﻿using Contact.Business.Interfaces;
 using Contact.DataAccess.Interfaces;
 using Contact.Entities.Concrete;
+using Contact.Entities.Dtos.ContactInformation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace Contact.Business.Concrete
         {
             _genericDal = genericDal;
             _contactInformationDal = contactInformationDal;
+        }
+
+        public async Task<List<ContactInformationGetDto>> GetContactsByLocationAsync(string location)
+        {
+            return await _contactInformationDal.GetContactsByLocationAsync(location);
         }
     }
 }
