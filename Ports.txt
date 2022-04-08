@@ -1,5 +1,29 @@
+Program iki servis ve bir UIdan oluþmaktadýr.
+
+Contact.Web UI - .net Core 5.0,html,css,jquery,signalR
+Contact Service - .net Core 5.0,postresql,entityframework
+Report Service - .net Core 5.0,mongodb,RabbitMQ(MassTransit),signalR
+
+Contact.Web : Contact web üzerinden yaptýðýmýz tüm crud iþlemleri, contact microservisine istek olarak iletilir. Rapor oluþturma talebi için de Report microservisine istek yapar.
+Contact.Service : Contact web üzerinden gelen isteklere cevap verir ve ayný zamanda Report.Service üzerinden gelen Rapor isteðine cevap verir.
+Report.Service : Contact tarafýndan gelen rapor isteðini alýr. Kuyruða ekler ve sýrasýyla kuyruktan okur raporu oluþtururken contact servisine istekler atýp ilgili rapor verilerini çeker ve rapor tamalandýðýnda client tarafýný dosyanýn indirmeye hazýr olduðu þeklinde bilgilendirir.
+
+Servislerin Çalýþacaðý Portlar
 "Contact.Web": "http://localhost:5010",
 "Contact.Services" : "http://localhost:5011"
 "Report.Services" : "http://localhost:5012"
 
+Docker Ayarlarý
+Contact.Service 
+	Postresql port : 5432
+Report.Service 
+	mongodb port  : 27017
+	rabbitmq port :15672
 
+
+Diðer Ayrýntýlar ;
+	Contact.Service: Özellikle mimari açýsýndan Contact.Service'yi tüm solid prensiplerine uygun þekilde hazýrladým. Çalýþmayý katmanlara ayýrarak çalýþtým. Business,DataAccess,Entities,Web.Api olmak üzere 4 katman var.
+		Entities Katmaný	: Burada modellerim ve dtolarým mevcut.
+		DataAccess Katmaný	: Burada veritabaný teknoloji seçimime göre baðlantýlarým, tablolarým, fluent api iþlemleri, custom repositorylerim ve migrationlarým mevcut.
+		Business Katmaný	: Burada iþ katmaným mevcut ayný zamanda fluent validationlarým ve ioc ayarlarým mevcut.
+		Web.Api				: Controllerimin dýþýnda model mapping ve custom filtersleri burada barýndýrýyorum.
