@@ -1,5 +1,9 @@
 using AutoMapper;
+using Contact.Business.Concrete;
 using Contact.Business.Concrete.Containers.Microsoftioc;
+using Contact.Business.Interfaces;
+using Contact.DataAccess.Concrete.EntityFrameworkCore.Repositories;
+using Contact.DataAccess.Interfaces;
 using Contact.WebApi.CustomFilters;
 using Contact.WebApi.Mapping.AutoMapperProfile;
 using FluentValidation.AspNetCore;
@@ -41,7 +45,17 @@ namespace Contact.WebApi
 
 
             services.AddControllers().AddFluentValidation();
-            services.AddDependencies();
+
+            services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
+            services.AddScoped(typeof(IGenericDal<>), typeof(EfGenericRepository<>));
+
+            services.AddScoped<IContactDal, EfContactRepository>();
+            services.AddScoped<IContactService, ContactManager>();
+
+            services.AddScoped<IContactInformationDal, EfContactInformationRepository>();
+            services.AddScoped<IContactInformationService, ContactInformationManager>();
+
+            //services.AddDependencies();
             services.AddScoped(typeof(ValidId<>));
 
             var mappingConfig = new MapperConfiguration(mc =>
